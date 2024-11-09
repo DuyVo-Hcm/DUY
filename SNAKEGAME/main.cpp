@@ -2,7 +2,7 @@
 #include <iostream>
 #include <deque>
 #include "raymath.h"
-
+#include "button.hpp"
 using namespace std;
 
 int cellSize = 30;
@@ -117,9 +117,12 @@ int main()
     Apple apple = Apple();
     Snake snake = Snake();
     Game game = Game();
+    Button startButton{{"ImageSnake/buttonplay.jpg"}, {300, 150}};
+    Texture2D background = LoadTexture("ImageSnakegame/background.jpg");
+
     while (!WindowShouldClose())
     {
-       
+        DrawTexture(background, 0, 0, WHITE);
         BeginDrawing();
           if (EventTriggered(0.2))
                 game.Update();
