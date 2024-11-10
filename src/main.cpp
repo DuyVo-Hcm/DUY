@@ -40,6 +40,7 @@ class Snake
     public:
         deque<Vector2> bodySnake={Vector2{6, 9}, Vector2{5, 9}, Vector2{4, 9}};
         Vector2 direction={1, 0};
+        bool addSegment=false;
         void Draw()
         {
             for(int i=0; i<bodySnake.size(); i++) 
