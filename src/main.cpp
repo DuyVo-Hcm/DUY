@@ -117,6 +117,17 @@ public:
         if(running)
         {
             snake.Update();
+            CheckCollisionWithFood();
+        }
+    }
+
+    void CheckCollisionWithFood()
+    {
+        if (Vector2Equals(snake.bodySnake[0], apple.position))
+        {
+            apple.position=apple.RandomPosNotinSnake(snake.bodySnake);
+            snake.addSegment=true;
+            score++;
         }
     }
 };
