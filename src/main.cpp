@@ -89,6 +89,13 @@ public:
         float y=GetRandomValue(0, cellCount - 1);
         return Vector2{x, y};
     }
+
+    Vector2 RandomPosNotinSnake(deque<Vector2> snakeBody)
+    {
+        Vector2 position=RandomPos();
+        while(ElementInDeque(position, snakeBody)) position=RandomPos();
+        return position;
+    }
 };
 
 class Game
@@ -110,12 +117,8 @@ public:
         if(running)
         {
             snake.Update();
-            CheckCollisionWithFood();
-            CheckCollisionWithEdges();
-            CheckCollisionWithTail();
         }
     }
-
 };
 
 int main()
