@@ -53,8 +53,9 @@ class Snake
         }
         void Update()
         {
-            bodySnake.pop_back();
             bodySnake.push_front(Vector2Add(bodySnake[0], direction));
+            if(addSegment) addSegment=false;
+            else bodySnake.pop_back();
         }
 };
 
