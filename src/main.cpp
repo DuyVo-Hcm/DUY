@@ -96,6 +96,8 @@ class Game
 public:
     Snake snake=Snake();
     Apple apple=Apple();
+    bool running=true;
+    int score=0;
 
     void Draw()
     {
