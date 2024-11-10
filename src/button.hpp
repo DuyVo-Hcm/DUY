@@ -1,5 +1,5 @@
-# pragma once
-# include <raylib.h>
+#pragma once
+#include <raylib.h>
 class Button
 {
 public:
