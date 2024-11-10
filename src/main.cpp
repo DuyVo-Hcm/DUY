@@ -5,18 +5,18 @@
 #include "button.hpp"
 using namespace std;
 
-int cellSize = 30;
-int cellCount = 25;
+int cellSize=30;
+int cellCount=25;
 
-Color darkGreen = {20, 160, 133, 255}; 
-Color Green = {20, 0, 0, 255};
+Color darkGreen={20, 160, 133, 255}; 
+Color Green= {20, 0, 0, 255};
 
-double lastUpdateTime = 0;
+double lastUpdateTime=0;
 bool ElementInDeque(Vector2 element, deque<Vector2> deque)
 {
-    for (unsigned int i = 0; i < deque.size(); i++)
+    for(int i=0; i<deque.size(); i++)
     {
-        if (Vector2Equals(deque[i], element))
+        if(Vector2Equals(deque[i], element))
         {
             return true;
         }
@@ -26,10 +26,10 @@ bool ElementInDeque(Vector2 element, deque<Vector2> deque)
 
 bool EventTriggered(double interval)
 {
-    double currentTime = GetTime();
-    if (currentTime - lastUpdateTime >= interval)
+    double currentTime=GetTime();
+    if(currentTime-lastUpdateTime>=interval)
     {
-        lastUpdateTime = currentTime;
+        lastUpdateTime=currentTime;
         return true;
     }
     return false;
@@ -38,15 +38,15 @@ bool EventTriggered(double interval)
 class Snake
 {
     public:
-        deque<Vector2> bodySnake = {Vector2{6, 9}, Vector2{5, 9},Vector2{4, 9}};
-        Vector2 direction = {1, 0};
-
+        deque<Vector2> bodySnake={Vector2{6, 9}, Vector2{5, 9}, Vector2{4, 9}};
+        Vector2 direction={1, 0};
         void Draw()
         {
-            for (unsigned int i = 0; i < bodySnake.size(); i++) {
-                float x = bodySnake[i].x;
-                float y = bodySnake[i].y;
-                Rectangle segment = Rectangle{x * cellSize, y * cellSize, (float)cellSize, (float)cellSize};
+            for(int i=0; i<bodySnake.size(); i++) 
+            {
+                float x=bodySnake[i].x;
+                float y=bodySnake[i].y;
+                Rectangle segment=Rectangle{x *cellSize, y *cellSize, (float)cellSize, (float)cellSize};
                 DrawRectangleRounded(segment, 0.5, 6, Green);
             }
         }
@@ -59,17 +59,16 @@ class Snake
 
 class Apple
 {
-
 public:
     Vector2 position;
     Texture2D texture;
 
     Apple()
     {
-        Image image = LoadImage("ImageSnakegame/Apple.png");
-        texture = LoadTextureFromImage(image);
+        Image image=LoadImage("ImageSnakegame/Apple.png");
+        texture=LoadTextureFromImage(image);
         UnloadImage(image);
-        position = RandomPos();
+        position=RandomPos();
     }
 
     ~Apple()
@@ -79,27 +78,29 @@ public:
 
     void Draw()
     {
-        DrawTexture(texture, position.x * cellSize, position.y * cellSize, WHITE);
+        DrawTexture(texture, position.x *cellSize, position.y *cellSize, WHITE);
     }
 
     Vector2 RandomPos()
     {
-        float x = GetRandomValue(0, cellCount - 1);
-        float y = GetRandomValue(0, cellCount - 1);
+        float x=GetRandomValue(0, cellCount - 1);
+        float y=GetRandomValue(0, cellCount - 1);
         return Vector2{x, y};
     }
 };
+
 class Game
 {
 public:
-    Snake snake = Snake();
-    Apple apple = Apple();
+    Snake snake=Snake();
+    Apple apple=Apple();
 
     void Draw()
     {
         snake.Draw();
         apple.Draw();
     }
+
     void Update()
     {
         snake.Update();
