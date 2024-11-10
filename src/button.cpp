@@ -7,10 +7,10 @@ Button::Button(const char *imagePath, Vector2 imagePosition)
 
 Button::~Button()
 {
-    UnloadTexture(texture);
+    UnloadTexture(Texture);
 }
 
 void Button::Draw()
 {
-    DrawTexture(texture, position, WHITE);
+    DrawTexture(Texture, position.x, position.y, WHITE);
 }
