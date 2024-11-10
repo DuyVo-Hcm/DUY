@@ -118,6 +118,7 @@ public:
         {
             snake.Update();
             CheckCollisionWithFood();
+            CheckCollisionWithEdges();
         }
     }
 
@@ -129,6 +130,12 @@ public:
             snake.addSegment=true;
             score++;
         }
+    }
+
+    void CheckCollisionWithEdges()
+    {
+        if (snake.bodySnake[0].x==cellCount || snake.bodySnake[0].x==-1) running=false;
+        if (snake.bodySnake[0].y==cellCount || snake.bodySnake[0].y==-1) running=false;
     }
 };
 
@@ -149,16 +156,13 @@ int main()
     {
         DrawTexture(background, 0, 0, WHITE);
         BeginDrawing();
-          if (EventTriggered(0.2))
-                game.Update();
+        if (EventTriggered(0.2)) game.Update();
 
-            if (IsKeyPressed(KEY_RIGHT) && game.snake.direction.x != -1)
-                game.snake.direction = { 1, 0 };
+        if(IsKeyPressed(KEY_RIGHT) && game.snake.direction.x!=-1) game.snake.direction={1, 0};
 
         ClearBackground(darkGreen);
         game.Draw();
         EndDrawing();
     }
-    
     CloseWindow();
 }
