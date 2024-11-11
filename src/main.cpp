@@ -54,14 +54,8 @@ class Snake
         void Update()
         {   
             bodySnake.push_front(Vector2Add(bodySnake[0], direction));
-            if(addSegment ==true)
-            {
-                addSegment == false;
-            }
-            else 
-            {
-                bodySnake.pop_back();
-            }
+            if(addSegment==true) addSegment=false;
+            else bodySnake.pop_back();
         }
 };
 
@@ -156,25 +150,56 @@ public:
 
 int main()
 {
+    InitWindow(cellSize *cellCount, cellSize * cellCount, "SnakeGame");
+    SetTargetFPS(60); 
 
-
-    InitWindow(cellSize *cellCount, cellSize * cellCount , "SNAKE GAME");
-    SetTargetFPS(60);
-
+    Texture2D background = LoadTexture("ImageSnakegame/background.png");
+    Button startButton{"ImageSnakegame/start_button.png", {450, 150}, 0.65};
+    Button exitButton{"ImageSnakegame/exit_button.png", {450, 300}, 0.65};
+    Snake snake = Snake();
     Game game = Game();
-    Button startButton{{"ImageSnake/buttonplay.jpg"}, {300, 150}};
-    Texture2D background = LoadTexture("ImageSnakegame/background.jpg");
+    bool exit = false;
 
-    while (!WindowShouldClose())
+    while(WindowShouldClose() == false && exit == false)
     {
-        DrawTexture(background, 0, 0, WHITE);
+        Vector2 mousePosition = GetMousePosition();
+        bool mousePressed = IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
+
+        if(startButton.isPressed(mousePosition, mousePressed))
+        {
+            while (!WindowShouldClose())
+            {
+                BeginDrawing();
+                if (EventTriggered(0.2))
+                    game.Update();
+
+                if (IsKeyPressed(KEY_UP) && game.snake.direction.y != 1)
+                    game.snake.direction = {0, -1};
+
+                if (IsKeyPressed(KEY_DOWN) && game.snake.direction.y != -1)
+                    game.snake.direction = {0, 1};
+
+                if (IsKeyPressed(KEY_LEFT) && game.snake.direction.x != 1)
+                    game.snake.direction = {-1, 0};
+
+                if (IsKeyPressed(KEY_RIGHT) && game.snake.direction.x != -1)
+                    game.snake.direction = {1, 0};
+                ClearBackground(darkGreen);
+                game.Draw();
+                EndDrawing();
+            }
+        CloseWindow();
+        }
+
+        if(exitButton.isPressed(mousePosition, mousePressed))
+        {
+            exit = true;
+        }
         BeginDrawing();
-        if (EventTriggered(0.2)) game.Update();
-
-        if(IsKeyPressed(KEY_RIGHT) && game.snake.direction.x!=-1) game.snake.direction={1, 0};
-
-        ClearBackground(darkGreen);
-        game.Draw();
+        ClearBackground(BLACK);
+        DrawTexture(background, 0, 0, WHITE);
+        startButton.Draw();
+        exitButton.Draw();
         EndDrawing();
     }
     CloseWindow();
