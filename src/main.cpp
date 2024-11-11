@@ -54,14 +54,8 @@ class Snake
         void Update()
         {   
             bodySnake.push_front(Vector2Add(bodySnake[0], direction));
-            if(addSegment ==true)
-            {
-                addSegment == false;
-            }
-            else 
-            {
-                bodySnake.pop_back();
-            }
+            if(addSegment==true) addSegment=false;
+            else bodySnake.pop_back();
         }
 };
 
@@ -165,11 +159,11 @@ int main()
     Button startButton{{"ImageSnake/buttonplay.jpg"}, {300, 150}};
     Texture2D background = LoadTexture("ImageSnakegame/background.jpg");
 
-    while (!WindowShouldClose())
+    while(!WindowShouldClose())
     {
         DrawTexture(background, 0, 0, WHITE);
         BeginDrawing();
-        if (EventTriggered(0.2)) game.Update();
+        if(EventTriggered(0.2)) game.Update();
 
         if(IsKeyPressed(KEY_RIGHT) && game.snake.direction.x!=-1) game.snake.direction={1, 0};
 
