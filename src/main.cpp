@@ -52,10 +52,16 @@ class Snake
             }
         }
         void Update()
-        {
+        {   
             bodySnake.push_front(Vector2Add(bodySnake[0], direction));
-            if(addSegment) addSegment=false;
-            else bodySnake.pop_back();
+            if(addSegment ==true)
+            {
+                addSegment == false;
+            }
+            else 
+            {
+                bodySnake.pop_back();
+            }
         }
 };
 
@@ -65,12 +71,12 @@ public:
     Vector2 position;
     Texture2D texture;
 
-    Apple()
+    Apple(deque<Vector2> snakeBody)
     {
         Image image=LoadImage("ImageSnakegame/Apple.png");
         texture=LoadTextureFromImage(image);
         UnloadImage(image);
-        position=RandomPos();
+        position= RandomPos(snakeBody);
     }
 
     ~Apple()
@@ -83,7 +89,7 @@ public:
         DrawTexture(texture, position.x *cellSize, position.y *cellSize, WHITE);
     }
 
-    Vector2 RandomPos()
+    Vector2 RandomPos(deque<Vector2> snakeBody)
     {
         float x=GetRandomValue(0, cellCount - 1);
         float y=GetRandomValue(0, cellCount - 1);
@@ -92,8 +98,8 @@ public:
 
     Vector2 RandomPosNotinSnake(deque<Vector2> snakeBody)
     {
-        Vector2 position=RandomPos();
-        while(ElementInDeque(position, snakeBody)) position=RandomPos();
+        Vector2 position= RandomPos(snakeBody);
+        while(ElementInDeque(position, snakeBody)) position=RandomPos(snakeBody);
         return position;
     }
 };
@@ -102,7 +108,7 @@ class Game
 {
 public:
     Snake snake=Snake();
-    Apple apple=Apple();
+    Apple apple=Apple(snake.bodySnake);
     bool running=true;
     int score=0;
 
@@ -131,6 +137,7 @@ public:
             snake.addSegment=true;
             score++;
         }
+        
     }
 
     void CheckCollisionWithEdges()
