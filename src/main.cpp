@@ -161,8 +161,6 @@ int main()
     InitWindow(cellSize *cellCount, cellSize * cellCount , "SNAKE GAME");
     SetTargetFPS(60);
 
-    Apple apple = Apple();
-    Snake snake = Snake();
     Game game = Game();
     Button startButton{{"ImageSnake/buttonplay.jpg"}, {300, 150}};
     Texture2D background = LoadTexture("ImageSnakegame/background.jpg");
