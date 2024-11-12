@@ -3,9 +3,10 @@
 class Button
 {
 public:
-    Button(const char* imagePath, Vector2 imagePosition);
+    Button(const char* imagePath, Vector2 imagePosition, float scale);
     ~Button();
     void Draw();
+    bool isPressed(Vector2 mousePos, bool mousePressed);
 private:
     Texture2D Texture;
     Vector2 position;
