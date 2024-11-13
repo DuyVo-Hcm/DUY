@@ -212,6 +212,7 @@ int main()
                         breakrecord=true;
                         ofstream outputFile("src/maxscore.txt");
                         outputFile<<game.score;
+                        record=game.score;
                     }
 
                     string max_score="Max Score: " + to_string(record);
