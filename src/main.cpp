@@ -8,14 +8,6 @@
 #include "frame.hpp"
 using namespace std;
 
-int cellSize=30;
-int cellCount=25;
-
-Color darkGreen={20, 160, 133, 255}; 
-Color Black={20, 0, 0, 255};
-Color Red={255, 0, 0, 200};
-
-double lastUpdateTime=0;
 bool ElementInDeque(Vector2 element, deque<Vector2> deque)
 {
     for(unsigned int i=0; i<deque.size(); i++)
