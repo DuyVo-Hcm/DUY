@@ -79,3 +79,14 @@ void Snake::Update()
     if (addSegment) addSegment = false;
     else bodySnake.pop_back();    
 }
+
+std::deque<Vector2> Snake::getbodySnake() {return bodySnake;}
+
+void Snake::setAddSegment() {addSegment=true;}
+
+Vector2 Snake::getDirection() {return direction;}
+
+void Snake::setDirection(Vector2 direct) 
+{
+    this->direction=direct;
+}
