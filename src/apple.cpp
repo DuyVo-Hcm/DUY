@@ -1,6 +1,6 @@
 #include "apple.hpp"
 
-Apple::Apple(deque<Vector2> snakeBody)
+Apple::Apple(std::deque<Vector2> snakeBody)
 {
     Image image=LoadImage("ImageSnakegame/Apple.png");
     texture=LoadTextureFromImage(image);
@@ -24,9 +24,13 @@ Vector2 Apple::RandomPos()
     return Vector2{x, y};
 }
 
-Vector2 Apple::RandomPosNotinSnake(deque<Vector2> snakeBody)
+Vector2 Apple::RandomPosNotinSnake(std::deque<Vector2> snakeBody)
 {
     Vector2 position=RandomPos();
     while(ElementInDeque(position, snakeBody)) position=RandomPos();
     return position;
 }
+
+Vector2 Apple::getPosition() {return position;}
+
+void Apple::setPosition(Vector2 pos) {position=pos;}
