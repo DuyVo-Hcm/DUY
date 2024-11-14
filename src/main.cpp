@@ -4,59 +4,6 @@
 #include "frame.hpp"
 using namespace std;
 
-class Game
-{
-public:
-    Snake snake=Snake();
-    Apple apple=Apple(snake.bodySnake);
-    bool running=true;
-    Score score=Score();
-    Frame frame=Frame();
-
-    void Draw()
-    {
-        snake.Draw();
-        apple.Draw();
-        score.DisplayScore(20, 20);
-        frame.DrawFrame(130, 60);
-    }
-
-    void Update()
-    {
-        if(running)
-        {
-            snake.Update();
-            CheckCollisionWithFood();
-            CheckCollisionWithEdges();
-            CheckCollisionWithTail();
-        }
-    }
-
-    void CheckCollisionWithFood()
-    {
-        if (Vector2Equals(snake.bodySnake[0], apple.position))
-        {
-            apple.position=apple.RandomPosNotinSnake(snake.bodySnake);
-            snake.addSegment=true;
-            score.UpdateScore(1);
-        }
-        
-    }
-
-    void CheckCollisionWithEdges()
-    {
-        if (snake.bodySnake[0].x==cellCount || snake.bodySnake[0].x==-1) running=false;
-        if (snake.bodySnake[0].y==cellCount || snake.bodySnake[0].y==-1) running=false;
-    }
-
-    void CheckCollisionWithTail()
-    {
-        deque<Vector2> headlessBody=snake.bodySnake;
-        headlessBody.pop_front();
-        if(ElementInDeque(snake.bodySnake[0], headlessBody)) running=false;
-    }
-};
-
 int main()
 {
     InitWindow(cellSize *cellCount, cellSize * cellCount, "SnakeGame");
