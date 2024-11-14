@@ -27,6 +27,12 @@ bool ElementInDeque(Vector2 element, deque<Vector2> deque)
     return false;
 }
 
+bool ElementInFrame(Vector2 element)
+{
+    if(element.x>=0 && element.x<=130 && element.y>=0 && element.y<=60) return true;
+    return false;
+}
+
 bool EventTriggered(double interval)
 {
     double currentTime=GetTime();
@@ -40,27 +46,27 @@ bool EventTriggered(double interval)
 
 class Snake
 {
-    public:
-        deque<Vector2> bodySnake={Vector2{6, 9}, Vector2{5, 9}, Vector2{4, 9}};
-        Vector2 direction={1, 0};
-        bool addSegment=false;
-        void Draw()
+public:
+    deque<Vector2> bodySnake={Vector2{6, 9}, Vector2{5, 9}, Vector2{4, 9}};
+    Vector2 direction={1, 0};
+    bool addSegment=false;
+    void Draw()
+    {
+        for(unsigned int i=0; i<bodySnake.size(); i++) 
         {
-            for(unsigned int i=0; i<bodySnake.size(); i++) 
-            {
-                float x=bodySnake[i].x;
-                float y=bodySnake[i].y;
-                Rectangle segment=Rectangle{x *cellSize, y *cellSize, (float)cellSize, (float)cellSize};
-                if(i) DrawRectangleRounded(segment, 0.5, 6, Black);
-                else DrawRectangleRounded(segment, 0.5, 6, Red);
-            }
+            float x=bodySnake[i].x;
+            float y=bodySnake[i].y;
+            Rectangle segment=Rectangle{x *cellSize, y *cellSize, (float)cellSize, (float)cellSize};
+            if(i) DrawRectangleRounded(segment, 0.5, 6, Black);
+            else DrawRectangleRounded(segment, 0.5, 6, Red);
         }
-        void Update()
-        {   
-            bodySnake.push_front(Vector2Add(bodySnake[0], direction));
-            if(addSegment==true) addSegment=false;
-            else bodySnake.pop_back();
-        }
+    }
+    void Update()
+    {   
+        bodySnake.push_front(Vector2Add(bodySnake[0], direction));
+        if(addSegment==true) addSegment=false;
+        else bodySnake.pop_back();
+    }
 };
 
 class Apple
@@ -90,8 +96,8 @@ public:
 
     Vector2 RandomPosNotinSnakeAndFrame(deque<Vector2> snakeBody)
     {
-        Vector2 position= RandomPos(snakeBody);
-        while(ElementInDeque(position, snakeBody)) position=RandomPos(snakeBody);
+        Vector2 position=RandomPos(snakeBody);
+        while(ElementInDeque(position, snakeBody) || ElementInFrame(position)) position=RandomPos(snakeBody);
         return position;
     }
 };
