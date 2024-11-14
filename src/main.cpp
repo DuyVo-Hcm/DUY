@@ -27,12 +27,6 @@ bool ElementInDeque(Vector2 element, deque<Vector2> deque)
     return false;
 }
 
-bool ElementInFrame(Vector2 element)
-{
-    if(element.x>=0 && element.x<=130 && element.y>=0 && element.y<=60) return true;
-    return false;
-}
-
 bool EventTriggered(double interval)
 {
     double currentTime=GetTime();
@@ -74,8 +68,6 @@ public:
         leftTailTexture = LoadTexture("ImageSnakegame/LeftTail.png");
         upTailTexture = LoadTexture("ImageSnakegame/UpTail.png");
         downTailTexture = LoadTexture("ImageSnakegame/DownTail.png");
-
-   
     }
 
     ~Snake()
@@ -90,49 +82,53 @@ public:
         UnloadTexture(leftTailTexture);
         UnloadTexture(upTailTexture);
         UnloadTexture(downTailTexture);
-
     }
 
     void Draw()
     {
-        Vector2 tail = bodySnake[bodySnake.size() - 1]; 
-        Vector2 secondToLast = bodySnake[bodySnake.size() - 2]; 
+        Vector2 tail = bodySnake[bodySnake.size()-1]; 
+        Vector2 secondToLast = bodySnake[bodySnake.size()-2]; 
 
-        for (int i = 0; i < bodySnake.size(); i++) {
-            float x = bodySnake[i].x;
-            float y = bodySnake[i].y;
-            Rectangle segment = Rectangle{x * cellSize, y * cellSize, (float)cellSize, (float)cellSize};
+        for(unsigned int i=0; i<bodySnake.size(); i++) 
+        {
+            float x=bodySnake[i].x;
+            float y=bodySnake[i].y;
+            Rectangle segment=Rectangle{x*cellSize, y*cellSize, (float)cellSize, (float)cellSize};
             DrawRectangleRounded(segment, 0.5, 6, darkGreen); 
         }
 
-        for (int i = 1; i < bodySnake.size() -  1; i++) {
-            if (bodySnake[i].x == bodySnake[i - 1].x) 
-            DrawTexture(bodyVerticalTexture, bodySnake[i].x * cellSize, bodySnake[i].y * cellSize, WHITE);
+        for(unsigned int i=1; i<bodySnake.size()-1; i++) 
+        {
+            if(bodySnake[i].x==bodySnake[i-1].x) 
+            DrawTexture(bodyVerticalTexture, bodySnake[i].x*cellSize, bodySnake[i].y*cellSize, WHITE);
             
-            if (bodySnake[i].y == bodySnake[i - 1].y)
-            DrawTexture(bodyHorizontalTexture, bodySnake[i].x * cellSize, bodySnake[i].y * cellSize, WHITE);
+            if(bodySnake[i].y==bodySnake[i-1].y)
+            DrawTexture(bodyHorizontalTexture, bodySnake[i].x*cellSize, bodySnake[i].y*cellSize, WHITE);
         }
 
-        if      (bodySnake[0].x > bodySnake[1].x)   DrawTexture(rightHeadTexture, bodySnake[0].x * cellSize, bodySnake[0].y * cellSize - 1, WHITE);
-        else if (bodySnake[0].x < bodySnake[1].x)   DrawTexture(leftHeadTexture, bodySnake[0].x * cellSize - 9, bodySnake[0].y * cellSize - 1, WHITE);
-        else if (bodySnake[0].y < bodySnake[1].y)   DrawTexture(upHeadTexture, bodySnake[0].x * cellSize - 1, bodySnake[0].y * cellSize - 9, WHITE);  
-        else if (bodySnake[0].y > bodySnake[1].y)   DrawTexture(downHeadTexture, bodySnake[0].x * cellSize - 1, bodySnake[0].y * cellSize, WHITE);
+        if(bodySnake[0].x>bodySnake[1].x) DrawTexture(rightHeadTexture, bodySnake[0].x*cellSize, bodySnake[0].y*cellSize-1, WHITE);
+        else if(bodySnake[0].x<bodySnake[1].x) DrawTexture(leftHeadTexture, bodySnake[0].x*cellSize-9, bodySnake[0].y*cellSize-1, WHITE);
+        else if(bodySnake[0].y<bodySnake[1].y) DrawTexture(upHeadTexture, bodySnake[0].x*cellSize-1, bodySnake[0].y*cellSize-9, WHITE);  
+        else if(bodySnake[0].y>bodySnake[1].y) DrawTexture(downHeadTexture, bodySnake[0].x*cellSize-1, bodySnake[0].y*cellSize, WHITE);
  
  
-        if (tail.x == secondToLast.x) {
-            if(tail.y < secondToLast.y)
-                DrawTexture(upTailTexture, tail.x * cellSize , tail.y * cellSize, WHITE);
+        if(tail.x==secondToLast.x) 
+        {
+            if(tail.y<secondToLast.y)
+                DrawTexture(upTailTexture, tail.x*cellSize, tail.y*cellSize, WHITE);
             else
-                DrawTexture(downTailTexture, tail.x * cellSize , tail.y * cellSize, WHITE);
+                DrawTexture(downTailTexture, tail.x*cellSize, tail.y*cellSize, WHITE);
         }
-        if (tail.y == secondToLast.y) {
-            if(tail.x < secondToLast.x)
-                DrawTexture(leftTailTexture, tail.x * cellSize , tail.y * cellSize, WHITE);
+        if(tail.y==secondToLast.y) 
+        {
+            if(tail.x<secondToLast.x)
+                DrawTexture(leftTailTexture, tail.x*cellSize, tail.y*cellSize, WHITE);
             else
-                DrawTexture(rightTailTexture, tail.x * cellSize , tail.y * cellSize, WHITE); 
+                DrawTexture(rightTailTexture, tail.x*cellSize, tail.y*cellSize, WHITE); 
         }
 
     }
+
     void Update()
     {   
         bodySnake.push_front(Vector2Add(bodySnake[0], direction));
@@ -151,25 +147,25 @@ public:
     {
         Image image=LoadImage("ImageSnakegame/Apple.png");
         texture=LoadTextureFromImage(image);
-        position=RandomPos(snakeBody);
+        position=RandomPosNotinSnake(snakeBody);
     }
 
     void Draw()
     {
-        DrawTexture(texture, position.x *cellSize, position.y *cellSize, WHITE);
+        DrawTexture(texture, position.x*cellSize, position.y*cellSize, WHITE);
     }
 
-    Vector2 RandomPos(deque<Vector2> snakeBody)
+    Vector2 RandomPos()
     {
-        float x=GetRandomValue(0, cellCount - 1);
-        float y=GetRandomValue(0, cellCount - 1);
+        float x=GetRandomValue(0, cellCount-1);
+        float y=GetRandomValue(0, cellCount-1);
         return Vector2{x, y};
     }
 
-    Vector2 RandomPosNotinSnakeAndFrame(deque<Vector2> snakeBody)
+    Vector2 RandomPosNotinSnake(deque<Vector2> snakeBody)
     {
-        Vector2 position=RandomPos(snakeBody);
-        while(ElementInDeque(position, snakeBody) || ElementInFrame(position)) position=RandomPos(snakeBody);
+        Vector2 position=RandomPos();
+        while(ElementInDeque(position, snakeBody)) position=RandomPos();
         return position;
     }
 };
@@ -206,7 +202,7 @@ public:
     {
         if (Vector2Equals(snake.bodySnake[0], apple.position))
         {
-            apple.position=apple.RandomPosNotinSnakeAndFrame(snake.bodySnake);
+            apple.position=apple.RandomPosNotinSnake(snake.bodySnake);
             snake.addSegment=true;
             score.UpdateScore(1);
         }
@@ -235,7 +231,7 @@ int main()
     Texture2D background=LoadTexture("ImageSnakegame/background.png");
     Button startButton{"ImageSnakegame/start_button.png", {450, 150}, 0.65};
     Button exitButton{"ImageSnakegame/exit_button.png", {450, 300}, 0.65};
-    Game game=Game();
+    Game *game=new Game();
 
     while(!WindowShouldClose())
     {
@@ -258,44 +254,46 @@ int main()
 
                 BeginDrawing();
                 if(EventTriggered(0.2))
-                    game.Update();
+                    game->Update();
 
-                if(IsKeyPressed(KEY_UP) && game.snake.direction.y != 1)
-                    game.snake.direction = {0, -1};
+                if(IsKeyPressed(KEY_UP) && game->snake.direction.y != 1)
+                    game->snake.direction = {0, -1};
 
-                if(IsKeyPressed(KEY_DOWN) && game.snake.direction.y != -1)
-                    game.snake.direction = {0, 1};
+                if(IsKeyPressed(KEY_DOWN) && game->snake.direction.y != -1)
+                    game->snake.direction = {0, 1};
 
-                if(IsKeyPressed(KEY_LEFT) && game.snake.direction.x != 1)
-                    game.snake.direction = {-1, 0};
+                if(IsKeyPressed(KEY_LEFT) && game->snake.direction.x != 1)
+                    game->snake.direction = {-1, 0};
 
-                if(IsKeyPressed(KEY_RIGHT) && game.snake.direction.x != -1)
-                    game.snake.direction = {1, 0};
+                if(IsKeyPressed(KEY_RIGHT) && game->snake.direction.x != -1)
+                    game->snake.direction = {1, 0};
                 
                 ClearBackground(darkGreen);
-                game.Draw();
+                game->Draw();
                 EndDrawing();
 
-                if(!game.running)
+                if(!game->running)
                 {
-                    string score="Score: " + to_string(game.score.GetScore());
+                    string score="Score: " + to_string(game->score.GetScore());
 
                     ifstream inputFile("src/maxscore.txt");
                     int record;
                     inputFile>>record;
 
                     bool breakrecord=false;
-                    if(game.score.GetScore()>record)
+                    if(game->score.GetScore()>record)
                     {
                         breakrecord=true;
                         ofstream outputFile("src/maxscore.txt");
-                        outputFile<<game.score.GetScore();
-                        record=game.score.GetScore();
+                        outputFile<<game->score.GetScore();
+                        record=game->score.GetScore();
                     }
 
                     string max_score="Max Score: " + to_string(record);
-
-                    game=Game();
+                    
+                    
+                    delete game;
+                    game = new Game();
 
                     while(true)
                     {
