@@ -7,9 +7,11 @@ private:
     Vector2 position;
     Texture2D texture;
 public:
-    Apple(deque<Vector2> snakeBody);
+    Apple(std::deque<Vector2> snakeBody);
     ~Apple();
     void Draw();
     Vector2 RandomPos();
-    Vector2 RandomPosNotinSnake(deque<Vector2> snakeBody);
+    Vector2 RandomPosNotinSnake(std::deque<Vector2> snakeBody);
+    Vector2 getPosition();
+    void setPosition(Vector2 pos);
 };
