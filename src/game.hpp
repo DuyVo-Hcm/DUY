@@ -6,8 +6,8 @@
 class Game
 {
 private:
-    Snake snake=Snake();
-    Apple apple=Apple(snake.bodySnake);
+    Snake *snake= new Snake();
+    Apple apple=Apple(snake->getbodySnake());
     bool running=true;
     Score score=Score();
     Frame frame=Frame();
@@ -17,4 +17,7 @@ public:
     void CheckCollisionWithFood();
     void CheckCollisionWithEdges();
     void CheckCollisionWithTail();
+    bool isRunning();
+    Score getScore();
+    Snake* getSnake();
 };
