@@ -88,7 +88,7 @@ public:
         return Vector2{x, y};
     }
 
-    Vector2 RandomPosNotinSnake(deque<Vector2> snakeBody)
+    Vector2 RandomPosNotinSnakeAndFrame(deque<Vector2> snakeBody)
     {
         Vector2 position= RandomPos(snakeBody);
         while(ElementInDeque(position, snakeBody)) position=RandomPos(snakeBody);
@@ -102,12 +102,15 @@ public:
     Snake snake=Snake();
     Apple apple=Apple(snake.bodySnake);
     bool running=true;
-    int score=0;
+    Score score=Score();
+    Frame frame=Frame();
 
     void Draw()
     {
         snake.Draw();
         apple.Draw();
+        score.DisplayScore(20, 20);
+        frame.DrawFrame(130, 60);
     }
 
     void Update()
@@ -125,9 +128,9 @@ public:
     {
         if (Vector2Equals(snake.bodySnake[0], apple.position))
         {
-            apple.position=apple.RandomPosNotinSnake(snake.bodySnake);
+            apple.position=apple.RandomPosNotinSnakeAndFrame(snake.bodySnake);
             snake.addSegment=true;
-            score++;
+            score.UpdateScore(1);
         }
         
     }
@@ -171,7 +174,6 @@ int main()
 
         if(startButton.isPressed(mousePosition, mousePressed))
         {
-            Frame 
             while(true)
             {
                 if(exit) break;
@@ -194,26 +196,23 @@ int main()
                 
                 ClearBackground(darkGreen);
                 game.Draw();
-
-                string text="Score: " + to_string(game.score);
-                DrawText(text.c_str(), 0, 0, 20, BLACK);
-
                 EndDrawing();
+
                 if(!game.running)
                 {
-                    string score="Score: " + to_string(game.score);
+                    string score="Score: " + to_string(game.score.GetScore());
 
                     ifstream inputFile("src/maxscore.txt");
                     int record;
                     inputFile>>record;
 
                     bool breakrecord=false;
-                    if(game.score>record)
+                    if(game.score.GetScore()>record)
                     {
                         breakrecord=true;
                         ofstream outputFile("src/maxscore.txt");
-                        outputFile<<game.score;
-                        record=game.score;
+                        outputFile<<game.score.GetScore();
+                        record=game.score.GetScore();
                     }
 
                     string max_score="Max Score: " + to_string(record);
@@ -224,10 +223,9 @@ int main()
                     {
                         BeginDrawing();
                         ClearBackground(darkGreen);
-                        game.Draw();
                         DrawText(score.c_str(), 60, 60, 50, BLACK);
                         DrawText(max_score.c_str(), 60, 130, 50, BLACK);
-                        if(breakrecord) DrawText("Break Record!!!", 0, 0, 25, BLACK);
+                        if(breakrecord) DrawText("Break Record!!!", 60, 300, 40, BLACK);
                         DrawText("Press Space to restart", 60, 400, 40, BLACK);
                         DrawText("Press Z to return to Menu", 60, 480, 40, BLACK);
                         EndDrawing();
