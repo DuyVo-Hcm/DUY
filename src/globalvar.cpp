@@ -1,3 +1,5 @@
+#include "globalvar.hpp"
+
 int cellSize=30;
 int cellCount=25;
 
