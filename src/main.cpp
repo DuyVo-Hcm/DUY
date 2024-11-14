@@ -4,39 +4,6 @@
 #include "frame.hpp"
 using namespace std;
 
-class Apple
-{
-public:
-    Vector2 position;
-    Texture2D texture;
-
-    Apple(deque<Vector2> snakeBody)
-    {
-        Image image=LoadImage("ImageSnakegame/Apple.png");
-        texture=LoadTextureFromImage(image);
-        position=RandomPosNotinSnake(snakeBody);
-    }
-
-    void Draw()
-    {
-        DrawTexture(texture, position.x*cellSize, position.y*cellSize, WHITE);
-    }
-
-    Vector2 RandomPos()
-    {
-        float x=GetRandomValue(0, cellCount-1);
-        float y=GetRandomValue(0, cellCount-1);
-        return Vector2{x, y};
-    }
-
-    Vector2 RandomPosNotinSnake(deque<Vector2> snakeBody)
-    {
-        Vector2 position=RandomPos();
-        while(ElementInDeque(position, snakeBody)) position=RandomPos();
-        return position;
-    }
-};
-
 class Game
 {
 public:
