@@ -1,7 +1,5 @@
 #include "game.hpp"
 #include "button.hpp"
-#include "score.hpp"
-#include "frame.hpp"
 using namespace std;
 
 int main()
@@ -37,41 +35,40 @@ int main()
                 if(EventTriggered(0.2))
                     game->Update();
 
-                if(IsKeyPressed(KEY_UP) && game->snake.direction.y != 1)
-                    game->snake.direction = {0, -1};
+                if(IsKeyPressed(KEY_UP) && game->getSnake()->getDirection().y != 1)
+                    game->getSnake()->setDirection({0, -1});
 
-                if(IsKeyPressed(KEY_DOWN) && game->snake.direction.y != -1)
-                    game->snake.direction = {0, 1};
+                if(IsKeyPressed(KEY_DOWN) && game->getSnake()->getDirection().y != -1)
+                    game->getSnake()->setDirection({0, 1});
 
-                if(IsKeyPressed(KEY_LEFT) && game->snake.direction.x != 1)
-                    game->snake.direction = {-1, 0};
+                if(IsKeyPressed(KEY_LEFT) && game->getSnake()->getDirection().x != 1)
+                    game->getSnake()->setDirection({-1, 0});
 
-                if(IsKeyPressed(KEY_RIGHT) && game->snake.direction.x != -1)
-                    game->snake.direction = {1, 0};
+                if(IsKeyPressed(KEY_RIGHT) && game->getSnake()->getDirection().x != -1)
+                    game->getSnake()->setDirection({1, 0});
                 
                 ClearBackground(darkGreen);
                 game->Draw();
                 EndDrawing();
 
-                if(!game->running)
+                if(!game->isRunning())
                 {
-                    string score="Score: " + to_string(game->score.GetScore());
+                    string score="Score: " + to_string(game->getScore().GetScore());
 
                     ifstream inputFile("src/maxscore.txt");
                     int record;
                     inputFile>>record;
 
                     bool breakrecord=false;
-                    if(game->score.GetScore()>record)
+                    if(game->getScore().GetScore()>record)
                     {
                         breakrecord=true;
                         ofstream outputFile("src/maxscore.txt");
-                        outputFile<<game->score.GetScore();
-                        record=game->score.GetScore();
+                        outputFile<<game->getScore().GetScore();
+                        record=game->getScore().GetScore();
                     }
 
                     string max_score="Max Score: " + to_string(record);
-                    
                     
                     delete game;
                     game = new Game();
