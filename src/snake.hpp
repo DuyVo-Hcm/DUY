@@ -1,11 +1,10 @@
 #pragma once
-#include "globalvar.hpp"
 #include "globalfunct.hpp"
 
 class Snake
 {
 private:
-    deque<Vector2> bodySnake = {Vector2{6, 9}, Vector2{5, 9}, Vector2{4, 9}};
+    std::deque<Vector2> bodySnake = {Vector2{6, 9}, Vector2{5, 9}, Vector2{4, 9}};
     Vector2 direction = {1, 0};
     bool addSegment = false;
 
@@ -24,4 +23,8 @@ public:
     ~Snake();
     void Draw();
     void Update();
+    std::deque<Vector2> getbodySnake();
+    void setAddSegment();
+    Vector2 getDirection();
+    void setDirection(Vector2 direct);
 };
