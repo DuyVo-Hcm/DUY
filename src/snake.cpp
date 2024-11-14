@@ -12,6 +12,10 @@ Snake::Snake()
     leftTailTexture = LoadTexture("ImageSnakegame/LeftTail.png");
     upTailTexture = LoadTexture("ImageSnakegame/UpTail.png");
     downTailTexture = LoadTexture("ImageSnakegame/DownTail.png");
+    topleftBodyTexture = LoadTexture("ImageSnakegame/body_topleft.png");
+    toprightBodyTexture = LoadTexture("ImageSnakegame/body_topright.png");
+    bottomleftBodyTexture = LoadTexture("ImageSnakegame/body_bottomleft.png");
+    bottomrightBodyTexture = LoadTexture("ImageSnakegame/body_bottomright.png");
 }
 
 Snake::~Snake()
@@ -26,6 +30,10 @@ Snake::~Snake()
     UnloadTexture(leftTailTexture);
     UnloadTexture(upTailTexture);
     UnloadTexture(downTailTexture);
+    UnloadTexture(topleftBodyTexture);
+    UnloadTexture(toprightBodyTexture);
+    UnloadTexture(bottomleftBodyTexture);
+    UnloadTexture(bottomrightBodyTexture);
 }
 
 void Snake::Draw()
@@ -43,17 +51,35 @@ void Snake::Draw()
 
     for(unsigned int i=1; i<bodySnake.size()-1; i++) 
     {
-        if(bodySnake[i].x==bodySnake[i-1].x) 
-        DrawTexture(bodyVerticalTexture, bodySnake[i].x*cellSize, bodySnake[i].y*cellSize, WHITE);
-        
-        if(bodySnake[i].y==bodySnake[i-1].y)
-        DrawTexture(bodyHorizontalTexture, bodySnake[i].x*cellSize, bodySnake[i].y*cellSize, WHITE);
+        if(bodySnake[i-1].x==bodySnake[i+1].x)
+        {
+            DrawTexture(bodyVerticalTexture, bodySnake[i].x*cellSize, bodySnake[i].y*cellSize, WHITE);
+            continue;
+        }
+        if(bodySnake[i-1].y==bodySnake[i+1].y)
+        {
+            DrawTexture(bodyHorizontalTexture, bodySnake[i].x*cellSize, bodySnake[i].y*cellSize, WHITE);
+            continue;
+        }
+        Vector2 a=bodySnake[i-1], b=bodySnake[i+1];
+        if(a.x>b.x) std::swap(a, b);
+        int control=a.x-b.x+a.y-b.y;
+        if(control!=0)
+        {
+            if(a.x==bodySnake[i].x) DrawTexture(toprightBodyTexture, bodySnake[i].x*cellSize, bodySnake[i].y*cellSize, WHITE);
+            else DrawTexture(bottomleftBodyTexture, bodySnake[i].x*cellSize, bodySnake[i].y*cellSize, WHITE);
+        }
+        else
+        {
+            if(a.x==bodySnake[i].x) DrawTexture(bottomrightBodyTexture, bodySnake[i].x*cellSize, bodySnake[i].y*cellSize, WHITE);
+            else DrawTexture(topleftBodyTexture, bodySnake[i].x*cellSize, bodySnake[i].y*cellSize, WHITE);
+        }
     }
 
-    if(bodySnake[0].x>bodySnake[1].x) DrawTexture(rightHeadTexture, bodySnake[0].x*cellSize, bodySnake[0].y*cellSize-1, WHITE);
-    else if(bodySnake[0].x<bodySnake[1].x) DrawTexture(leftHeadTexture, bodySnake[0].x*cellSize-9, bodySnake[0].y*cellSize-1, WHITE);
-    else if(bodySnake[0].y<bodySnake[1].y) DrawTexture(upHeadTexture, bodySnake[0].x*cellSize-1, bodySnake[0].y*cellSize-9, WHITE);  
-    else if(bodySnake[0].y>bodySnake[1].y) DrawTexture(downHeadTexture, bodySnake[0].x*cellSize-1, bodySnake[0].y*cellSize, WHITE);
+    if(bodySnake[0].x>bodySnake[1].x) DrawTexture(rightHeadTexture, bodySnake[0].x*cellSize, bodySnake[0].y*cellSize, WHITE);
+    else if(bodySnake[0].x<bodySnake[1].x) DrawTexture(leftHeadTexture, bodySnake[0].x*cellSize, bodySnake[0].y*cellSize, WHITE);
+    else if(bodySnake[0].y<bodySnake[1].y) DrawTexture(upHeadTexture, bodySnake[0].x*cellSize, bodySnake[0].y*cellSize, WHITE);  
+    else if(bodySnake[0].y>bodySnake[1].y) DrawTexture(downHeadTexture, bodySnake[0].x*cellSize, bodySnake[0].y*cellSize, WHITE);
 
 
     if(tail.x==secondToLast.x) 

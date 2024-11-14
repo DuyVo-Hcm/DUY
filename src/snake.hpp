@@ -18,6 +18,10 @@ private:
     Texture2D leftTailTexture;
     Texture2D upTailTexture;
     Texture2D downTailTexture;
+    Texture2D topleftBodyTexture;
+    Texture2D toprightBodyTexture;
+    Texture2D bottomleftBodyTexture;
+    Texture2D bottomrightBodyTexture;
 public:
     Snake();
     ~Snake();
