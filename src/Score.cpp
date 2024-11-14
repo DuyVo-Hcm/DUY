@@ -1,22 +1,14 @@
-#include <iostream>
+#include "score.hpp"
 
-class Score {
-private:
-    int score;
+Score::Score()
+    : score(0) {}
 
-public:
-    Score() : score(0) {}
+void Score::UpdateScore(int points) {this->score+=points;}
 
-    void UpdateScore(int points) {
-        score += points;
-    }
+int Score::GetScore() {return this->score;}
 
-    int GetScore() {
-        return score;
-    }
-
-    void DisplayScore(int x, int y) {
-
-        std::cout << "Score: " << score << std::endl;
-    }
-};
+void Score::DisplayScore(int x, int y)
+{
+    string text="Score: " + to_string(this->score);
+    DrawText(text.c_str(), x, y, 50, BLACK);
+}
