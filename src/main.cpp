@@ -48,6 +48,7 @@ int main()
                     game->getSnake()->setDirection({1, 0});
                 
                 ClearBackground(darkGreen);
+                DrawRectangleLinesEx(Rectangle{ (float)offset - 5, (float)offset - 5, (float)cellSize *cellCount + 10, (float)cellSize *cellCount+10}, 5, darkGreen);
                 game->Draw();
                 EndDrawing();
 

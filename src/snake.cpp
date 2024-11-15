@@ -45,7 +45,7 @@ void Snake::Draw()
     {
         float x=bodySnake[i].x;
         float y=bodySnake[i].y;
-        Rectangle segment=Rectangle{x*cellSize, y*cellSize, (float)cellSize, (float)cellSize};
+        Rectangle segment=Rectangle{offset + x*cellSize, offset + y*cellSize, (float)cellSize, (float)cellSize};
         DrawRectangleRounded(segment, 0.5, 6, darkGreen); 
     }
 

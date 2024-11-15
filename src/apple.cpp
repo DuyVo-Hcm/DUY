@@ -14,7 +14,7 @@ Apple::~Apple()
 
 void Apple::Draw()
 {
-    DrawTexture(texture, position.x*cellSize, position.y*cellSize, WHITE);
+    DrawTexture(texture, offset + position.x*cellSize,offset + position.y*cellSize, WHITE);
 }
 
 Vector2 Apple::RandomPos()
