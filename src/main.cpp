@@ -4,7 +4,7 @@ using namespace std;
 
 int main()
 {
-    InitWindow(cellSize *cellCount, cellSize * cellCount, "SnakeGame");
+    InitWindow(2 * offset + cellSize * cellCount, 2 * offset + cellSize * cellCount, "Retro Snake");
     SetTargetFPS(60); 
 
     Texture2D background=LoadTexture("ImageSnakegame/background.png");
@@ -48,6 +48,7 @@ int main()
                     game->getSnake()->setDirection({1, 0});
                 
                 ClearBackground(darkGreen);
+                DrawRectangleLinesEx(Rectangle{(float)offset - 5, (float)offset - 5, (float)cellSize * cellCount + 10, (float)cellSize * cellCount + 10}, 5, Black);
                 game->Draw();
                 EndDrawing();
 
