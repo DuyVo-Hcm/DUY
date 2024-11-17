@@ -10,7 +10,6 @@ private:
     Apple apple=Apple(snake->getbodySnake());
     bool running=true;
     Score score=Score();
-    Frame frame=Frame();
 public:
     void Draw();
     void Update();
