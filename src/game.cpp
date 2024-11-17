@@ -5,7 +5,6 @@ void Game::Draw()
     snake->Draw();
     apple.Draw();
     score.DisplayScore(20, 20);
-    frame.DrawFrame(130, 60);
 }
 
 void Game::Update()
