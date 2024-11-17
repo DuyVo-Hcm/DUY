@@ -2,8 +2,7 @@
 
 Apple::Apple(std::deque<Vector2> snakeBody)
 {
-    Image image=LoadImage("ImageSnakegame/Apple.png");
-    texture=LoadTextureFromImage(image);
+    texture=LoadTexture("ImageSnakegame/Apple.png");
     position=RandomPosNotinSnake(snakeBody);
 }
 
