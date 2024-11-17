@@ -11,7 +11,6 @@ public:
     ~Apple();
     void Draw();
     Vector2 RandomPos();
-    Vector2 RandomPosNotinSnake(std::deque<Vector2> snakeBody);
+    void RandomPosNotinSnake(std::deque<Vector2> snakeBody);
     Vector2 getPosition();
-    void setPosition(Vector2 pos);
 };
