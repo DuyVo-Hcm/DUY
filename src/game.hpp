@@ -1,7 +1,6 @@
 #pragma once
 #include "apple.hpp"
 #include "score.hpp"
-#include "frame.hpp"
 
 class Game
 {
