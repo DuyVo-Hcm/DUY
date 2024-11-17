@@ -23,13 +23,10 @@ Vector2 Apple::RandomPos()
     return Vector2{x, y};
 }
 
-Vector2 Apple::RandomPosNotinSnake(std::deque<Vector2> snakeBody)
+void Apple::RandomPosNotinSnake(std::deque<Vector2> snakeBody)
 {
-    Vector2 position=RandomPos();
+    position=RandomPos();
     while(ElementInDeque(position, snakeBody)) position=RandomPos();
-    return position;
 }
 
 Vector2 Apple::getPosition() {return position;}
-
-void Apple::setPosition(Vector2 pos) {position=pos;}
