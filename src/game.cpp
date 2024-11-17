@@ -23,7 +23,7 @@ void Game::CheckCollisionWithFood()
 {
     if (Vector2Equals(snake->getbodySnake()[0], apple.getPosition()))
     {
-        apple.setPosition(apple.RandomPosNotinSnake(snake->getbodySnake()));
+        apple.RandomPosNotinSnake(snake->getbodySnake());
         snake->setAddSegment();
         score.UpdateScore(1);
     }
